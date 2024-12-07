@@ -2,7 +2,7 @@
 // Hero.jsx
 import { Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import WaveAnimation from "./ui/wave-animation";
+import WaveAnimation from "./wave-animation";
 import Link from "next/link";
 
 const Hero = () => {
