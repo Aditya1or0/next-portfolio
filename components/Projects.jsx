@@ -13,7 +13,8 @@ const projects = [
     image:
       "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2FKharidari%20(2).png?alt=media&token=05c62563-4780-41b8-b86e-5694f7f4e5ff",
     tags: ["React.js", "Node.js", "Express.js", "Tailwind CSS", "MongoDB"],
-    link: "#",
+    link: "https://kharidari-frontend.vercel.app/",
+    codeLink: "https://github.com/Aditya1or0/kharidari",
   },
   {
     title: "MyProjects (Full Stack)",
@@ -29,7 +30,8 @@ const projects = [
       "NextAuth",
       "Firebase",
     ],
-    link: "#",
+    link: "https://my-projects-two.vercel.app/",
+    codeLink: "https://github.com/ADitya1or0/my-projects-full-stack", // Add the GitHub link here
   },
   {
     title: "BgRemover (MERN Stack)",
@@ -38,16 +40,17 @@ const projects = [
     image:
       "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2FBgremover.png?alt=media&token=83d8db04-1f3e-4b55-a573-ec819a490590",
     tags: ["React.js", "Express.js", "Node.js", "Tailwind", "MongoDB", "AI"],
-    link: "#",
+    link: "https://bg-remover-client.vercel.app/",
+    codeLink: "https://github.com/Aditya1or0/bgremover", // Add the GitHub link here
   },
-
   {
     title: "BlogiFy (Full Stack)",
     description: "A full-stack blog web application",
     image:
       "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2FScreenshot%202024-12-02%20131252.png?alt=media&token=a592f3e3-23ac-4121-b9c2-050c15946c5b",
     tags: ["Next.js", "Three.js", "Shadcn UI", "Tailwind", "MongoDB"],
-    link: "#",
+    link: "https://blog-app-beta-three-27.vercel.app/",
+    codeLink: "https://github.com/yourusername/blogify", // Add the GitHub link here
   },
   {
     title: "ChatApp (Full Stack)",
@@ -55,7 +58,8 @@ const projects = [
     image:
       "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2FChatapp.png?alt=media&token=d40055df-2b8f-49bc-a387-b3ea52458db8",
     tags: ["React.js", "Firebase"],
-    link: "#",
+    link: "#https://chat-app-nine-ruby.vercel.app/",
+    codeLink: "https://github.com/Aditya1or0/ChatApp", // Add the GitHub link here
   },
   {
     title: "VibeTube",
@@ -64,7 +68,8 @@ const projects = [
     image:
       "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2Fvibetube%20(2).png?alt=media&token=7ebdf539-20c3-4bc8-91c3-cdd601950db5",
     tags: ["React.js", "Youtube Api"],
-    link: "#",
+    link: "https://vibe-tube-omega.vercel.app/",
+    codeLink: "https://github.com/Aditya1or0/VibeTube",
   },
 ];
 
@@ -144,9 +149,10 @@ const ProjectCard = ({ project, index }) => (
       </div>
 
       <div className="mt-4 flex justify-between items-center">
-        <motion.button
-          className="px-4 py-2 text-transparent bg-clip-text bg-gradient-to-r from-[#56c8e1] via-[#4f8cc9] to-[#2a6ab1] rounded-md duration-300 ml-[-20px]
-"
+        <motion.a
+          href={project.link}
+          target="_blank"
+          className="px-4 py-2 text-transparent bg-clip-text bg-gradient-to-r from-[#56c8e1] via-[#4f8cc9] to-[#2a6ab1] rounded-md duration-300 ml-[-20px]"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -154,10 +160,11 @@ const ProjectCard = ({ project, index }) => (
             Live Demo
             <ExternalLink className="w-[20px] h-[20px] text-sky-600 ml-2" />
           </div>
-        </motion.button>
-        <motion.button
-          className="px-4 py-2 text-transparent bg-clip-text bg-gradient-to-r from-[#56c8e1] via-[#4f8cc9] to-[#2a6ab1] rounded-md duration-300 ml-[-20px]
-"
+        </motion.a>
+        <motion.a
+          href={project.codeLink}
+          target="_blank"
+          className="px-4 py-2 text-transparent bg-clip-text bg-gradient-to-r from-[#56c8e1] via-[#4f8cc9] to-[#2a6ab1] rounded-md duration-300 ml-[-20px]"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -165,7 +172,7 @@ const ProjectCard = ({ project, index }) => (
             Code
             <Code className="w-[20px] h-[20px] text-sky-600 ml-2" />
           </div>
-        </motion.button>
+        </motion.a>
       </div>
     </div>
   </motion.div>
