@@ -57,7 +57,7 @@ const About = () => {
               href="https://drive.google.com/file/d/1cJSZx1BigHYjaFhLPVW7Oe1LO961N5FK/view?usp=drive_link"
               target="_blank"
             >
-              <Button className="mt-6 px-5 py-4 text-white bg-sky-800">
+              <Button className="mt-6 px-5 py-4 text-white bg-sky-600 dark:bg-sky-800">
                 <FileText className="mr-1 h-5 w-5" />
                 Resume
               </Button>

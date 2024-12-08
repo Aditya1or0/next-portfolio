@@ -61,7 +61,8 @@ export default function Contact() {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full p-3 rounded-md  border border-input text-foreground"
+                  className="w-full p-3 rounded-md border border-input bg-background text-foreground"
+                  style={{ color: "var(--foreground)" }}
                   required
                 />
               </div>
@@ -76,7 +77,8 @@ export default function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full p-3 rounded-md  border border-input text-foreground"
+                  className="w-full p-3 rounded-md border border-input bg-background text-foreground"
+                  style={{ color: "var(--foreground)" }}
                   required
                 />
               </div>
@@ -91,11 +93,15 @@ export default function Contact() {
                   id="message"
                   name="message"
                   rows={3}
-                  className="w-full p-3 rounded-md border border-input text-foreground"
+                  className="w-full p-3 rounded-md border border-input bg-background text-foreground"
+                  style={{ color: "var(--foreground)" }}
                   required
                 ></textarea>
               </div>
-              <Button type="submit" className="w-full bg-sky-800 text-white">
+              <Button
+                type="submit"
+                className="w-full bg-sky-600 dark:bg-sky-800 text-white"
+              >
                 Send Message
               </Button>
             </form>

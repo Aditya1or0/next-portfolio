@@ -109,7 +109,7 @@ const Projects = () => {
       </div>
       <div className="flex items-center justify-center">
         <a href="http://github.com/Aditya1or0" target="_blank">
-          <Button className="bg-sky-800 mt-10 px-12 w-auto py-5 text-white ">
+          <Button className="bg-sky-600 dark:bg-sky-800 mt-10 px-12 w-auto py-5 text-white ">
             Show More Projects
             <ExternalLink className="ml-2" />
           </Button>
