@@ -89,14 +89,6 @@ const Navbar = () => {
 
   return (
     <>
-      <Head>
-        <link
-          rel="icon"
-          href={theme === "dark" ? "/favicon-dark.ico" : "/favicon-light.ico"}
-          type="image/x-icon"
-        />
-      </Head>
-
       <nav className="fixed w-full z-50 bg-[linear-gradient(270deg, #56c8e1 50%, #4876c6 100%)] dark:bg-inherit backdrop-blur-sm ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -108,11 +100,7 @@ const Navbar = () => {
                 className="flex-shrink-0"
               >
                 <Image
-                  src={
-                    theme === "dark"
-                      ? "/name-logo-white.svg"
-                      : "/name-logo-favicon.svg"
-                  }
+                  src="/name-logo-favicon.svg"
                   alt="Logo"
                   width={70}
                   height={60}
