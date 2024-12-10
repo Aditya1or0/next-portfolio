@@ -1,7 +1,9 @@
 "use client";
-import { Mail, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EarthCanvas from "./Earth";
+
+import ContactBackground from "./ContactBackground";
 
 export default function Contact() {
   const accessKey = process.env.NEXT_PUBLIC_ACCESS_KEY;
@@ -31,7 +33,11 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8">
+    <section
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/95 w-full"
+      id="contact"
+    >
+      <ContactBackground />
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-center">
           <Phone className="text-black dark:text-white w-[30px] h-[30px] sm:w-[45px] sm:h-[45px] mr-4 mb-12" />
@@ -42,13 +48,15 @@ export default function Contact() {
             </span>
           </h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="space-y-6">
-            <div className="h-[300px] sm:h-[400px] w-full ">
+        <div className="grid md:grid-cols-2 gap-8 relative">
+          <div className="space-y-6 relative">
+            {/* Background blur div for the Earth */}
+
+            <div className="h-[300px] sm:h-[400px] w-full relative z-10">
               <EarthCanvas />
             </div>
           </div>
-          <div>
+          <div className="relative z-10">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label
