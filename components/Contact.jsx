@@ -2,7 +2,6 @@
 import { Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EarthCanvas from "./Earth";
-
 import ContactBackground from "./ContactBackground";
 
 export default function Contact() {
@@ -34,7 +33,7 @@ export default function Contact() {
 
   return (
     <section
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/95 w-full"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/95 w-full dark" // Add `dark` class here
       id="contact"
     >
       <ContactBackground />
@@ -51,7 +50,6 @@ export default function Contact() {
         <div className="grid md:grid-cols-2 gap-8 relative">
           <div className="space-y-6 relative">
             {/* Background blur div for the Earth */}
-
             <div className="h-[300px] sm:h-[400px] w-full relative z-10">
               <EarthCanvas />
             </div>
@@ -70,7 +68,6 @@ export default function Contact() {
                   id="name"
                   name="name"
                   className="w-full p-3 rounded-md border border-input bg-background text-foreground"
-                  style={{ color: "var(--foreground)" }}
                   required
                 />
               </div>
@@ -86,7 +83,6 @@ export default function Contact() {
                   id="email"
                   name="email"
                   className="w-full p-3 rounded-md border border-input bg-background text-foreground"
-                  style={{ color: "var(--foreground)" }}
                   required
                 />
               </div>
@@ -102,7 +98,6 @@ export default function Contact() {
                   name="message"
                   rows={3}
                   className="w-full p-3 rounded-md border border-input bg-background text-foreground"
-                  style={{ color: "var(--foreground)" }}
                   required
                 ></textarea>
               </div>

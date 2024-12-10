@@ -214,7 +214,7 @@ const Hero = () => {
           </h1>
 
           <div className="typewriter-container">
-            <p className="text-base sm:text-lg md:text-xl text-gray-500 dark:text-gray-300 max-w-2xl mx-auto drop-shadow-md min-h-[2rem]">
+            <p className="text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-300 max-w-2xl mx-auto drop-shadow-md min-h-[2rem]">
               <span className="typewriter-text">{text}</span>
               {cursorVisible && <span className="cursor">|</span>}
             </p>
