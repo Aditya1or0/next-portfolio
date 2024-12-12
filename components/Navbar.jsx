@@ -23,7 +23,7 @@ const Navbar = () => {
     setMounted(true);
 
     const handleScroll = () => {
-      const sections = ["home", "about", "education", "projects"];
+      const sections = ["home", "about", "education", "projects", "blogs"];
       const currentSection = sections.find((section) => {
         const element = document.getElementById(section);
         if (element) {
@@ -104,7 +104,7 @@ const Navbar = () => {
                   alt="Logo"
                   width={70}
                   height={60}
-                  className="mt-5 "
+                  className="mt-5"
                   priority
                 />
               </motion.div>
@@ -116,6 +116,7 @@ const Navbar = () => {
                 <NavLink href="#about">About</NavLink>
                 <NavLink href="#education">Education</NavLink>
                 <NavLink href="#projects">Projects</NavLink>
+                <NavLink href="#blogs">Blogs</NavLink>
               </div>
 
               <div className="ml-4">
@@ -147,6 +148,7 @@ const Navbar = () => {
             <MobileNavLink href="#about">About</MobileNavLink>
             <MobileNavLink href="#education">Education</MobileNavLink>
             <MobileNavLink href="#projects">Projects</MobileNavLink>
+            <MobileNavLink href="#blogs">Blogs</MobileNavLink>
           </div>
         </motion.div>
       </nav>

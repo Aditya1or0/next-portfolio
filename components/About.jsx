@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { FileText, User } from "lucide-react";
+import { FileText, User, UserRound } from "lucide-react";
 import { Button } from "./ui/button";
 
 const skills = [
@@ -23,7 +23,7 @@ const About = () => {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center">
-            <User className="text-inherit w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] mr-4 mb-4" />
+            <UserRound className="text-inherit w-[40px] h-[40px] sm:w-[48px] sm:h-[48px] mr-4 mb-5" />
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               About{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#56c8e1] via-[#4f8cc9] to-[#2a6ab1]">
@@ -31,11 +31,6 @@ const About = () => {
               </span>
             </h2>
           </div>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-            I'm a passionate developer with expertise in building modern web
-            applications. I love creating beautiful and functional experiences
-            that solve real-world problems.
-          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12">
@@ -51,7 +46,8 @@ const About = () => {
               passion for web development. I build web apps and websites using
               the MERN stack. My expertise in MongoDB, Express.js, React,
               Node.js, and Next.js enables me to create dynamic, user-friendly
-              interfaces that enhance user experiences.
+              interfaces that enhance user experiences.I love creating beautiful
+              and functional experiences that solve real-world problems.
             </p>
             <a
               href="https://drive.google.com/file/d/1cJSZx1BigHYjaFhLPVW7Oe1LO961N5FK/view?usp=drive_link"

@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import React from "react";
 import Contact from "@/components/Contact";
+import BlogShowcase from "@/components/BlogShowcase";
 
 const Page = () => {
   return (
@@ -21,9 +22,9 @@ const Page = () => {
         <div className="flex-grow">
           <Hero />
           <About />
-
           <Education />
           <Projects />
+          <BlogShowcase />
           <Contact />
         </div>
         <Footer />

@@ -11,6 +11,7 @@ const Hero = () => {
   const sceneRef = useRef(null);
   const cameraRef = useRef(null);
   const rendererRef = useRef(null);
+  const animationFrameRef = useRef(null);
 
   // Typewriter Effect State
   const [text, setText] = useState("");
@@ -29,6 +30,8 @@ const Hero = () => {
 
   // 3D Particle Background Setup
   useEffect(() => {
+    if (!canvasRef.current) return;
+
     // Scene setup
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x000000);
@@ -54,8 +57,8 @@ const Hero = () => {
     // Particles
     const particleCount = 200;
     const geometry = new THREE.BufferGeometry();
-    const positions = [];
-    const colors = [];
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
 
     const materialColors = [
       new THREE.Color(0x56c8e1), // Lighter blue from gradient
@@ -65,23 +68,20 @@ const Hero = () => {
 
     for (let i = 0; i < particleCount; i++) {
       // Random initial position
-      const x = (Math.random() - 0.5) * 10;
-      const y = (Math.random() - 0.5) * 10;
-      const z = (Math.random() - 0.5) * 10;
-
-      positions.push(x, y, z);
+      positions[i * 3] = (Math.random() - 0.5) * 10;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
 
       // Random color
       const color =
         materialColors[Math.floor(Math.random() * materialColors.length)];
-      colors.push(color.r, color.g, color.b);
+      colors[i * 3] = color.r;
+      colors[i * 3 + 1] = color.g;
+      colors[i * 3 + 2] = color.b;
     }
 
-    geometry.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute(positions, 3)
-    );
-    geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
       size: 0.1,
@@ -96,10 +96,10 @@ const Hero = () => {
 
     // Animation loop
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationFrameRef.current = requestAnimationFrame(animate);
 
       // Get current positions
-      const positions = geometry.getAttribute("position").array;
+      const positions = geometry.attributes.position.array;
 
       // Simple particle movement simulation
       for (let i = 0; i < particleCount; i++) {
@@ -127,18 +127,29 @@ const Hero = () => {
 
     // Handle window resize
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      if (cameraRef.current && rendererRef.current) {
+        cameraRef.current.aspect = window.innerWidth / window.innerHeight;
+        cameraRef.current.updateProjectionMatrix();
+        rendererRef.current.setSize(window.innerWidth, window.innerHeight);
+      }
     };
     window.addEventListener("resize", handleResize);
 
     // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
-      renderer.dispose();
-      geometry.dispose();
-      material.dispose();
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+      }
+      if (geometry) {
+        geometry.dispose();
+      }
+      if (material) {
+        material.dispose();
+      }
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
   }, []);
 
@@ -221,7 +232,11 @@ const Hero = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-4 mt-6">
-            <a href="https://github.com/Aditya1or0" target="_blank">
+            <a
+              href="https://github.com/Aditya1or0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 <Github className="mr-2 h-5 w-5" />
                 GitHub
@@ -230,6 +245,7 @@ const Hero = () => {
             <a
               href="https://www.linkedin.com/in/adityashharmaa/"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <Button variant="outline" size="lg" className="w-full sm:w-auto">
                 <Linkedin className="mr-2 h-5 w-5" />
