@@ -33,7 +33,7 @@ export default function Contact() {
 
   return (
     <section
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/95 w-full dark pb-6" // Add `dark` class here
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/95 w-full dark pb-6 pt-6" // Add `dark` class here
       id="contact"
     >
       <ContactBackground />
