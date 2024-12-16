@@ -13,7 +13,7 @@ const projects = [
     description:
       "A fully functional e-commerce website for clothing, using React, Node, Express, Tailwind and MongoDB",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2FKharidari%20(2).png?alt=media&token=05c62563-4780-41b8-b86e-5694f7f4e5ff",
+      "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2FScreenshot%202024-12-04%20211239.png?alt=media&token=3126acc0-088b-46c0-a944-8d77c5bfbed6",
     tags: ["React.js", "Node.js", "Express.js", "Tailwind CSS", "MongoDB"],
     link: "https://kharidari-frontend.vercel.app/",
     codeLink: "https://github.com/Aditya1or0/kharidari",
