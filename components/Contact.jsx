@@ -25,7 +25,9 @@ const FormInput = React.memo(({ label, id, type = "text", ...props }) => (
   </div>
 ));
 
-export default function Contact() {
+FormInput.displayName = "FormInput"; // Setting displayName for FormInput
+
+function Contact() {
   const accessKey = process.env.NEXT_PUBLIC_ACCESS_KEY;
 
   const handleSubmit = React.useCallback(
@@ -116,3 +118,7 @@ export default function Contact() {
     </section>
   );
 }
+
+Contact.displayName = "Contact";
+
+export default Contact;
