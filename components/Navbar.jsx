@@ -7,6 +7,32 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import Head from "next/head";
+import React from "react";
+
+function throttle(func, limit) {
+  let inThrottle;
+  return function () {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
+
+const smoothScroll = (e, href) => {
+  e.preventDefault();
+  const targetId = href.replace("#", "");
+  const targetElement = document.getElementById(targetId);
+  if (targetElement) {
+    window.scrollTo({
+      top: targetElement.offsetTop - 80,
+      behavior: "smooth",
+    });
+  }
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,14 +41,14 @@ const Navbar = () => {
   const [mounted, setMounted] = useState(false);
 
   const menuVariants = {
-    open: { opacity: 1, x: 0 },
-    closed: { opacity: 0, x: "100%" },
+    open: { opacity: 1, y: 0 },
+    closed: { opacity: 0, y: -20 },
   };
 
   useEffect(() => {
     setMounted(true);
 
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       const sections = ["home", "about", "education", "projects", "blogs"];
       const currentSection = sections.find((section) => {
         const element = document.getElementById(section);
@@ -36,7 +62,7 @@ const Navbar = () => {
       if (currentSection) {
         setActiveSection(currentSection);
       }
-    };
+    }, 100);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -44,11 +70,11 @@ const Navbar = () => {
 
   if (!mounted) return null;
 
-  const NavLink = ({ href, children }) => {
+  const NavLink = React.memo(({ href, children }) => {
     const isActive = activeSection === href.replace("#", "");
 
     return (
-      <Link href={href}>
+      <Link href={href} onClick={(e) => smoothScroll(e, href)}>
         <div className="relative group">
           <span
             className={`text-base transition-colors duration-300 ${
@@ -59,23 +85,24 @@ const Navbar = () => {
           >
             {children}
           </span>
-          <span
-            className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-500 transform origin-left transition-transform duration-300 ${
-              isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-            }`}
+          <motion.span
+            className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-500"
+            initial={false}
+            animate={{ scaleX: isActive ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
           />
         </div>
       </Link>
     );
-  };
+  });
 
-  const MobileNavLink = ({ href, children }) => {
+  const MobileNavLink = React.memo(({ href, children }) => {
     const isActive = activeSection === href.replace("#", "");
 
     return (
       <Link
         href={href}
-        onClick={() => setIsOpen(false)}
+        onClick={(e) => smoothScroll(e, href)}
         className={`block py-2 px-4 transition-all duration-300 ${
           isActive
             ? "bg-blue-50 dark:bg-blue-900/20 text-blue-500 dark:text-blue-400"
@@ -85,7 +112,7 @@ const Navbar = () => {
         {children}
       </Link>
     );
-  };
+  });
 
   return (
     <>
@@ -141,6 +168,7 @@ const Navbar = () => {
           initial="closed"
           animate={isOpen ? "open" : "closed"}
           variants={menuVariants}
+          transition={{ duration: 0.3 }}
           className="md:hidden absolute top-16 inset-x-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800"
         >
           <div className="py-2">

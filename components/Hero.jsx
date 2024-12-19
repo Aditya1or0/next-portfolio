@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import WaveAnimation from "./wave-animation";
 import Link from "next/link";
 import * as THREE from "three";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const canvasRef = useRef(null);
@@ -32,124 +33,65 @@ const Hero = () => {
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    // Scene setup
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
-    sceneRef.current = scene;
-
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     );
-    camera.position.z = 5;
-    cameraRef.current = camera;
-
     const renderer = new THREE.WebGLRenderer({
       canvas: canvasRef.current,
-      antialias: true,
       alpha: true,
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    rendererRef.current = renderer;
 
-    // Particles
-    const particleCount = 200;
-    const geometry = new THREE.BufferGeometry();
+    const particles = new THREE.BufferGeometry();
+    const particleCount = 1000;
+
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
 
-    const materialColors = [
-      new THREE.Color(0x56c8e1), // Lighter blue from gradient
-      new THREE.Color(0x4f8cc9), // Medium blue from gradient
-      new THREE.Color(0x2a6ab1), // Darker blue from gradient
-    ];
-
-    for (let i = 0; i < particleCount; i++) {
-      // Random initial position
-      positions[i * 3] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
-
-      // Random color
-      const color =
-        materialColors[Math.floor(Math.random() * materialColors.length)];
-      colors[i * 3] = color.r;
-      colors[i * 3 + 1] = color.g;
-      colors[i * 3 + 2] = color.b;
+    for (let i = 0; i < particleCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 10;
+      colors[i] = Math.random();
     }
 
-    geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    particles.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    particles.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-      size: 0.1,
+      size: 0.05,
       vertexColors: true,
       blending: THREE.AdditiveBlending,
       transparent: true,
-      opacity: 0.7,
     });
 
-    const particleSystem = new THREE.Points(geometry, material);
+    const particleSystem = new THREE.Points(particles, material);
     scene.add(particleSystem);
 
-    // Animation loop
+    camera.position.z = 5;
+
     const animate = () => {
-      animationFrameRef.current = requestAnimationFrame(animate);
-
-      // Get current positions
-      const positions = geometry.attributes.position.array;
-
-      // Simple particle movement simulation
-      for (let i = 0; i < particleCount; i++) {
-        // Update position
-        positions[i * 3] += (Math.random() - 0.5) * 0.05; // x
-        positions[i * 3 + 1] += (Math.random() - 0.5) * 0.05; // y
-        positions[i * 3 + 2] += (Math.random() - 0.5) * 0.05; // z
-
-        // Boundary check and wrap-around
-        if (Math.abs(positions[i * 3]) > 5) positions[i * 3] *= -1;
-        if (Math.abs(positions[i * 3 + 1]) > 5) positions[i * 3 + 1] *= -1;
-        if (Math.abs(positions[i * 3 + 2]) > 5) positions[i * 3 + 2] *= -1;
-      }
-
-      // Mark geometry as needing update
-      geometry.attributes.position.needsUpdate = true;
-
-      // Rotate scene slightly for dynamic effect
-      scene.rotation.y += 0.001;
-
+      requestAnimationFrame(animate);
+      particleSystem.rotation.x += 0.001;
+      particleSystem.rotation.y += 0.001;
       renderer.render(scene, camera);
     };
 
     animate();
 
-    // Handle window resize
     const handleResize = () => {
-      if (cameraRef.current && rendererRef.current) {
-        cameraRef.current.aspect = window.innerWidth / window.innerHeight;
-        cameraRef.current.updateProjectionMatrix();
-        rendererRef.current.setSize(window.innerWidth, window.innerHeight);
-      }
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     };
+
     window.addEventListener("resize", handleResize);
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (rendererRef.current) {
-        rendererRef.current.dispose();
-      }
-      if (geometry) {
-        geometry.dispose();
-      }
-      if (material) {
-        material.dispose();
-      }
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      renderer.dispose();
     };
   }, []);
 
@@ -215,52 +157,70 @@ const Hero = () => {
         className="absolute inset-0 z-0 w-full h-full opacity-50"
       />
 
-      <div className="container mx-auto text-center relative z-10 px-4 sm:px-6 lg:px-8 w-full">
-        <div className="space-y-6 animate-in fade-in duration-1000">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black dark:text-white drop-shadow-lg">
-            Hi, I'm{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#56c8e1] via-[#4f8cc9] to-[#2a6ab1]">
-              Aditya Sharma
-            </span>
-          </h1>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="container mx-auto text-center relative z-10 px-4 sm:px-6 lg:px-8 w-full"
+      >
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black dark:text-white drop-shadow-lg"
+        >
+          Hi, I'm{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#56c8e1] via-[#4f8cc9] to-[#2a6ab1]">
+            Aditya Sharma
+          </span>
+        </motion.h1>
 
-          <div className="typewriter-container">
-            <p className="text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-300 max-w-2xl mx-auto drop-shadow-md min-h-[2rem]">
-              <span className="typewriter-text">{text}</span>
-              {cursorVisible && <span className="cursor">|</span>}
-            </p>
-          </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="typewriter-container"
+        >
+          <p className="text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-300 max-w-2xl mx-auto drop-shadow-md min-h-[2rem]">
+            <span className="typewriter-text">{text}</span>
+            {cursorVisible && <span className="cursor">|</span>}
+          </p>
+        </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-4 mt-6">
-            <a
-              href="https://github.com/Aditya1or0"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                <Github className="mr-2 h-5 w-5" />
-                GitHub
-              </Button>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/adityashharmaa/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                <Linkedin className="mr-2 h-5 w-5" />
-                LinkedIn
-              </Button>
-            </a>
-            <Link href="/#contact">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                <Mail className="mr-2 h-5 w-5" />
-                Contact
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+          className="flex flex-wrap justify-center gap-4 mt-6"
+        >
+          <a
+            href="https://github.com/Aditya1or0"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              <Github className="mr-2 h-5 w-5" />
+              GitHub
+            </Button>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/adityashharmaa/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              <Linkedin className="mr-2 h-5 w-5" />
+              LinkedIn
+            </Button>
+          </a>
+          <Link href="/#contact">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              <Mail className="mr-2 h-5 w-5" />
+              Contact
+            </Button>
+          </Link>
+        </motion.div>
+      </motion.div>
 
       <div className="absolute bottom-0 left-0 right-0 w-full">
         <WaveAnimation />
