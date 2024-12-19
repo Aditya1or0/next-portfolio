@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import WaveAnimation from "./wave-animation";
 import Link from "next/link";
 import * as THREE from "three";
 import { motion } from "framer-motion";
@@ -222,9 +221,7 @@ const Hero = () => {
         </motion.div>
       </motion.div>
 
-      <div className="absolute bottom-0 left-0 right-0 w-full">
-        <WaveAnimation />
-      </div>
+      <div className="absolute bottom-0 left-0 right-0 w-full"></div>
     </section>
   );
 };
