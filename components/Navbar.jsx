@@ -9,6 +9,7 @@ import { useTheme } from "next-themes";
 import Head from "next/head";
 import React from "react";
 
+// Helper function for throttling scroll events
 function throttle(func, limit) {
   let inThrottle;
   return function () {
@@ -22,6 +23,7 @@ function throttle(func, limit) {
   };
 }
 
+// Smooth scroll function
 const smoothScroll = (e, href) => {
   e.preventDefault();
   const targetId = href.replace("#", "");
@@ -34,6 +36,7 @@ const smoothScroll = (e, href) => {
   }
 };
 
+// Navbar component
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -96,6 +99,8 @@ const Navbar = () => {
     );
   });
 
+  NavLink.displayName = "NavLink"; // Set displayName for NavLink
+
   const MobileNavLink = React.memo(({ href, children }) => {
     const isActive = activeSection === href.replace("#", "");
 
@@ -113,6 +118,8 @@ const Navbar = () => {
       </Link>
     );
   });
+
+  MobileNavLink.displayName = "MobileNavLink"; // Set displayName for MobileNavLink
 
   return (
     <>
@@ -183,5 +190,7 @@ const Navbar = () => {
     </>
   );
 };
+
+Navbar.displayName = "Navbar"; // Set displayName for Navbar
 
 export default Navbar;
