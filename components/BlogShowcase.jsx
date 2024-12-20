@@ -59,7 +59,7 @@ const BlogShowcase = () => {
       </div>
       <div className="flex items-center justify-center">
         <a
-          href="https://medium.com/@your-medium-username"
+          href="https://medium.com/@adityasharma264"
           target="_blank"
           rel="noopener noreferrer"
         >

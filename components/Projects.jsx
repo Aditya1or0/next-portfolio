@@ -22,8 +22,8 @@ const projects = [
       "MongoDB",
       "Framer Motion",
     ],
-    link: "https://vibe-tube-omega.vercel.app/",
-    codeLink: "https://github.com/Aditya1or0/VibeTube",
+    link: "https://trip-go-frontend.vercel.app/",
+    codeLink: "https://github.com/Aditya1or0/TripGo",
   },
   {
     title: "AuthiFy (Full Stack)",
