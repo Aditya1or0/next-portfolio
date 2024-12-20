@@ -9,6 +9,50 @@ import { useInView } from "react-intersection-observer";
 
 const projects = [
   {
+    title: "TripGo (Full Stack)",
+    description:
+      "This project is a Travel Agency Booking System that enables customers to explore and book travel packages. ",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2FScreenshot%202024-12-19%20134645.png?alt=media&token=33140726-fa42-4db0-805d-e27c286a9644",
+    tags: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "Tailwind CSS",
+      "MongoDB",
+      "Framer Motion",
+    ],
+    link: "https://vibe-tube-omega.vercel.app/",
+    codeLink: "https://github.com/Aditya1or0/VibeTube",
+  },
+  {
+    title: "AuthiFy (Full Stack)",
+    description:
+      "AuthiFy is a secure authentication system.The project provides features like email verification, password reset functionality, and overall user authentication.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2Fhome.png?alt=media&token=4b10a817-cdf9-4616-877c-c1a852f27da2",
+    tags: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "Tailwind CSS",
+      "MongoDB",
+      "Node Mailer",
+    ],
+    link: "https://github.com/Aditya1or0/Mern-Auth",
+    codeLink: "https://github.com/Aditya1or0/Mern-Auth",
+  },
+  {
+    title: "imaginAI",
+    description:
+      "Full Stack Text-to-Image Generator AI SaaS Application.This app allows users to generate images by entering text prompts.",
+    image:
+      "https://firebasestorage.googleapis.com/v0/b/chat-app-86f48.appspot.com/o/my-projects%2FimaginAI.png?alt=media&token=e9100837-97a7-4f92-bd9a-42ee79c12dc2",
+    tags: ["React.js", "Youtube Api"],
+    link: "https://imagin-ai-frontend.vercel.app/",
+    codeLink: "https://github.com/Aditya1or0/imaginAI",
+  },
+  {
     title: "Kharidari (MERN Stack)",
     description:
       "A fully functional e-commerce website for clothing, using React, Node, Express, Tailwind and MongoDB",
@@ -63,6 +107,7 @@ const projects = [
     link: "https://chat-app-nine-ruby.vercel.app/",
     codeLink: "https://github.com/Aditya1or0/ChatApp",
   },
+
   {
     title: "VibeTube",
     description:
@@ -76,6 +121,14 @@ const projects = [
 ];
 
 const Projects = () => {
+  const [visibleProjects, setVisibleProjects] = useState(6);
+  const showMoreProjects = () => {
+    if (visibleProjects === 6) {
+      setVisibleProjects(projects.length);
+    } else {
+      setVisibleProjects(6);
+    }
+  };
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -83,7 +136,7 @@ const Projects = () => {
 
   return (
     <div
-      className="min-h-screen bg-inherit py-20 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-inherit py-12 px-4 sm:px-6 lg:px-8"
       id="projects"
       ref={ref}
     >
@@ -109,23 +162,19 @@ const Projects = () => {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.slice(0, visibleProjects).map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-center">
-        <a
-          href="http://github.com/Aditya1or0"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className="flex items-center justify-center mt-10">
+        <Button
+          className="bg-sky-600 dark:bg-sky-800 px-12 w-auto py-5 text-white"
+          onClick={showMoreProjects}
         >
-          <Button className="bg-sky-600 dark:bg-sky-800 mt-10 px-12 w-auto py-5 text-white">
-            Show More Projects
-            <ExternalLink className="ml-2" />
-          </Button>
-        </a>
+          {visibleProjects === 6 ? "Show More" : "Show Less"}
+        </Button>
       </div>
     </div>
   );
@@ -146,13 +195,16 @@ const ProjectCard = ({ project, index }) => {
       whileHover={{ y: -10 }}
       className="bg-[#f9f9f9] dark:bg-[#121212] rounded-lg overflow-hidden shadow-lg"
     >
-      <Image
-        src={project.image}
-        alt={project.title}
-        width={400}
-        height={200}
-        className="w-full h-48 object-cover"
-      />
+      <div className="relative w-full h-56 overflow-hidden">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-300 hover:scale-105"
+        />
+      </div>
       <div className="p-6">
         <h3 className="text-lg sm:text-xl font-bold mb-2">{project.title}</h3>
         <p className="text-sm sm:text-base text-muted-foreground mb-4">

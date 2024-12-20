@@ -59,12 +59,12 @@ function Contact() {
 
   return (
     <section
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-inherit w-full pb-6 "
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-inherit w-full pb-6 pt-6"
       id="contact"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-center">
         <div className="flex flex-col items-center justify-center w-full">
-          <div className="flex items-center justify-center mb-6">
+          <div className="flex items-center justify-center mb-12">
             <Phone className="text-black dark:text-white w-[30px] h-[30px] sm:w-[45px] sm:h-[45px] mr-4" />
             <h2 className="text-3xl sm:text-4xl font-bold text-black dark:text-white text-center">
               Contact{" "}
