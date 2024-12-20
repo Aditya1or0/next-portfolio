@@ -107,7 +107,10 @@ const Navbar = () => {
     return (
       <Link
         href={href}
-        onClick={(e) => smoothScroll(e, href)}
+        onClick={(e) => {
+          smoothScroll(e, href);
+          setIsOpen(false); // Close the menu when a link is clicked
+        }}
         className={`block py-2 px-4 transition-all duration-300 ${
           isActive
             ? "bg-blue-50 dark:bg-blue-900/20 text-blue-500 dark:text-blue-400"
@@ -134,7 +137,7 @@ const Navbar = () => {
                 className="flex-shrink-0"
               >
                 <Image
-                  src="/name-logo-favicon.svg"
+                  src="/logo.svg"
                   alt="Logo"
                   width={70}
                   height={60}

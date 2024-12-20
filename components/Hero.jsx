@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -8,19 +8,16 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   const canvasRef = useRef(null);
-  const sceneRef = useRef(null);
-  const cameraRef = useRef(null);
   const rendererRef = useRef(null);
   const animationFrameRef = useRef(null);
 
-  // Typewriter Effect State
   const [text, setText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [cursorVisible, setCursorVisible] = useState(true);
+  const [typingSpeed, setTypingSpeed] = useState(100);
 
-  // Array of texts to cycle through
   const textArray = [
     "Full Stack Developer",
     "Frontend Developer",
@@ -28,8 +25,7 @@ const Hero = () => {
     "Web Designer",
   ];
 
-  // 3D Particle Background Setup
-  useEffect(() => {
+  const setupParticles = useCallback(() => {
     if (!canvasRef.current) return;
 
     const scene = new THREE.Scene();
@@ -44,6 +40,7 @@ const Hero = () => {
       alpha: true,
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    rendererRef.current = renderer;
 
     const particles = new THREE.BufferGeometry();
     const particleCount = 1000;
@@ -64,6 +61,8 @@ const Hero = () => {
       vertexColors: true,
       blending: THREE.AdditiveBlending,
       transparent: true,
+      depthTest: false,
+      depthWrite: false,
     });
 
     const particleSystem = new THREE.Points(particles, material);
@@ -72,7 +71,7 @@ const Hero = () => {
     camera.position.z = 5;
 
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationFrameRef.current = requestAnimationFrame(animate);
       particleSystem.rotation.x += 0.001;
       particleSystem.rotation.y += 0.001;
       renderer.render(scene, camera);
@@ -90,67 +89,66 @@ const Hero = () => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      particleSystem.geometry.dispose();
+      particleSystem.material.dispose();
       renderer.dispose();
+      cancelAnimationFrame(animationFrameRef.current);
     };
   }, []);
 
-  // Typewriter Effect
   useEffect(() => {
-    let typingInterval;
-    let cursorInterval;
+    const cleanup = setupParticles();
+    return cleanup;
+  }, [setupParticles]);
 
-    // Handle typing and deleting text
-    if (!isDeleting) {
-      // Typing the text
-      typingInterval = setInterval(() => {
-        if (currentIndex < textArray[currentTextIndex].length) {
-          setText(
-            (prevText) =>
-              prevText + textArray[currentTextIndex].charAt(currentIndex)
-          );
-          setCurrentIndex((prevIndex) => prevIndex + 1);
+  useEffect(() => {
+    const typingInterval = setInterval(
+      () => {
+        if (!isDeleting) {
+          if (currentIndex < textArray[currentTextIndex].length) {
+            setText(
+              (prevText) => prevText + textArray[currentTextIndex][currentIndex]
+            );
+            setCurrentIndex((prevIndex) => prevIndex + 1);
+          } else {
+            // Pause at the end of the word
+            setTimeout(() => setIsDeleting(true), 1500);
+          }
         } else {
-          // Once a line is fully typed, start deleting after a short delay
-          clearInterval(typingInterval);
-          setTimeout(() => {
-            setIsDeleting(true);
-          }, 1000); // Delay before starting to delete
+          if (currentIndex > 0) {
+            setText((prevText) => prevText.slice(0, -1));
+            setCurrentIndex((prevIndex) => prevIndex - 1);
+          } else {
+            setIsDeleting(false);
+            setCurrentTextIndex(
+              (prevIndex) => (prevIndex + 1) % textArray.length
+            );
+            // Pause before starting the next word
+            setTimeout(() => {}, 500);
+          }
         }
-      }, 100); // Adjust typing speed here (ms per character)
-    } else {
-      // Deleting the text
-      typingInterval = setInterval(() => {
-        if (currentIndex > 0) {
-          setText((prevText) => prevText.slice(0, -1)); // Remove one character
-          setCurrentIndex((prevIndex) => prevIndex - 1);
-        } else {
-          // Once the text is fully deleted, move to the next text
-          clearInterval(typingInterval);
-          setIsDeleting(false);
-          setCurrentTextIndex(
-            (prevIndex) => (prevIndex + 1) % textArray.length
-          ); // Loop through texts
-        }
-      }, 50); // Adjust deleting speed here (ms per character)
-    }
+      },
+      isDeleting ? 50 : Math.random() * 50 + 100
+    );
 
-    // Handle cursor blinking
-    cursorInterval = setInterval(() => {
-      setCursorVisible((prev) => !prev); // Toggle cursor visibility every 500ms
+    return () => clearInterval(typingInterval);
+  }, [currentIndex, currentTextIndex, isDeleting, textArray]);
+
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setCursorVisible((prev) => !prev);
     }, 500);
 
     return () => {
-      clearInterval(typingInterval); // Cleanup typing interval on component unmount
-      clearInterval(cursorInterval); // Cleanup cursor interval
+      clearInterval(cursorInterval);
     };
-  }, [currentIndex, currentTextIndex, isDeleting, textArray]);
+  }, []);
 
   return (
     <section
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent w-full"
       id="home"
     >
-      {/* 3D Canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 z-0 w-full h-full opacity-50"
@@ -182,7 +180,11 @@ const Hero = () => {
         >
           <p className="text-base sm:text-lg md:text-xl text-gray-800 dark:text-gray-300 max-w-2xl mx-auto drop-shadow-md min-h-[2rem]">
             <span className="typewriter-text">{text}</span>
-            {cursorVisible && <span className="cursor">|</span>}
+            <span
+              className={`cursor ${cursorVisible ? "visible" : "invisible"}`}
+            >
+              |
+            </span>
           </p>
         </motion.div>
 
@@ -220,8 +222,23 @@ const Hero = () => {
           </Link>
         </motion.div>
       </motion.div>
-
-      <div className="absolute bottom-0 left-0 right-0 w-full"></div>
+      <style jsx>{`
+        @keyframes blink {
+          0% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+        .cursor {
+          font-weight: 100;
+          animation: blink 1s infinite;
+        }
+      `}</style>
     </section>
   );
 };

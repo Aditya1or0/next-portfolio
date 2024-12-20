@@ -17,7 +17,7 @@ const Footer = () => {
               className="flex-shrink-0"
             >
               <Image
-                src="/name-logo-favicon.svg"
+                src="/logo.svg"
                 alt="Logo"
                 width={30}
                 height={30}

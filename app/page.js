@@ -1,13 +1,27 @@
-import About from "@/components/About";
-import Education from "@/components/Education";
-import Hero from "@/components/Hero";
-import Projects from "@/components/Projects";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
 import { ThemeProvider } from "@/components/theme-provider";
-import React from "react";
-import Contact from "@/components/Contact";
-import BlogShowcase from "@/components/BlogShowcase";
+
+const About = dynamic(() => import("@/components/About"), {
+  loading: () => <p>Loading...</p>,
+});
+const Education = dynamic(() => import("@/components/Education"), {
+  loading: () => <p>Loading...</p>,
+});
+const Projects = dynamic(() => import("@/components/Projects"), {
+  loading: () => <p>Loading...</p>,
+});
+const BlogShowcase = dynamic(() => import("@/components/BlogShowcase"), {
+  loading: () => <p>Loading...</p>,
+});
+const Contact = dynamic(() => import("@/components/Contact"), {
+  loading: () => <p>Loading...</p>,
+});
+const Footer = dynamic(() => import("@/components/Footer"), {
+  loading: () => <p>Loading...</p>,
+});
 
 const Page = () => {
   return (
@@ -21,11 +35,13 @@ const Page = () => {
         <Navbar />
         <div className="flex-grow">
           <Hero />
-          <About />
-          <Education />
-          <Projects />
-          <BlogShowcase />
-          <Contact />
+          <Suspense fallback={<div>Loading...</div>}>
+            <About />
+            <Education />
+            <Projects />
+            <BlogShowcase />
+            <Contact />
+          </Suspense>
         </div>
         <Footer />
       </div>
