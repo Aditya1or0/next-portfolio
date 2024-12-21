@@ -6,24 +6,33 @@ import { ExternalLink, BookOpen } from "lucide-react";
 import { Button } from "./ui/button";
 
 const BlogShowcase = () => {
-  const [blogs, setBlogs] = useState([]);
-
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        // Replace 'your-medium-username' with your actual Medium username
-        const response = await fetch(
-          "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@adityasharma264"
-        );
-        const data = await response.json();
-        setBlogs(data.items.slice(0, 3)); // Display the latest 3 blog posts
-      } catch (error) {
-        console.error("Error fetching blog posts:", error);
-      }
-    };
-
-    fetchBlogs();
-  }, []);
+  // Manually adding blog posts
+  const blogs = [
+    {
+      title:
+        "A Complete Guide to Deploying Your MERN Stack Application on Vercel: Frontend and Backend",
+      pubDate: "20 DEC 2024",
+      link: "https://medium.com/@adityasharma264",
+      subtitle:
+        "Learn how to deploy a full MERN stack application with Vercel, covering both frontend and backend.",
+    },
+    {
+      title:
+        "Fixing NextAuth Redirect URI Mismatch Error When Deploying to Vercel",
+      pubDate: "9 DEC 2024",
+      link: "https://medium.com/@adityasharma264",
+      subtitle:
+        "Learn how to resolve the redirect URI mismatch error when using NextAuth with Vercel deployment.",
+    },
+    {
+      title:
+        "Solving 'NextRouter was not mounted' Error in Next.js: My First Next.js Project Experience",
+      pubDate: "8 DEC 2024",
+      link: "https://medium.com/@adityasharma264",
+      subtitle:
+        "A deep dive into troubleshooting the 'NextRouter was not mounted' error during my first Next.js project.",
+    },
+  ];
 
   return (
     <section
@@ -87,7 +96,7 @@ const BlogCard = ({ blog, index }) => (
         {blog.subtitle}
       </p>
       <p className="text-xs text-muted-foreground mb-4">
-        Published on: {new Date(blog.pubDate).toLocaleDateString()}
+        Published on: {blog.pubDate}
       </p>
       <motion.a
         href={blog.link}
