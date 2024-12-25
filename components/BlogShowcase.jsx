@@ -36,7 +36,7 @@ const BlogShowcase = () => {
 
   return (
     <section
-      className="min-h-screen bg-inherit py-20 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-inherit pt-12 mt-10 sm:mt-20 px-4 sm:px-6 lg:px-8"
       id="blogs"
     >
       <div className="max-w-7xl mx-auto">
@@ -66,7 +66,7 @@ const BlogShowcase = () => {
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-8">
         <a
           href="https://medium.com/@adityasharma264"
           target="_blank"

@@ -7,6 +7,9 @@ import { ThemeProvider } from "@/components/theme-provider";
 const About = dynamic(() => import("@/components/About"), {
   loading: () => <p>Loading...</p>,
 });
+const Skills = dynamic(() => import("@/components/Skills"), {
+  loading: () => <p>Loading...</p>,
+});
 const Education = dynamic(() => import("@/components/Education"), {
   loading: () => <p>Loading...</p>,
 });
@@ -37,6 +40,7 @@ const Page = () => {
           <Hero />
           <Suspense fallback={<div>Loading...</div>}>
             <About />
+            <Skills />
             <Education />
             <Projects />
             <BlogShowcase />
