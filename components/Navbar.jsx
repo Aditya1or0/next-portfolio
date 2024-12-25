@@ -39,7 +39,7 @@ const smoothScroll = (e, href) => {
 // Navbar component
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState("about"); // Default to 'about' since Home is removed
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -52,7 +52,7 @@ const Navbar = () => {
     setMounted(true);
 
     const handleScroll = throttle(() => {
-      const sections = ["home", "about", "education", "projects", "blogs"];
+      const sections = ["about", "education", "projects", "blogs", "skills"]; // 'skills' added to sections
       const currentSection = sections.find((section) => {
         const element = document.getElementById(section);
         if (element) {
@@ -149,8 +149,8 @@ const Navbar = () => {
 
             <div className="hidden md:flex items-center space-x-8">
               <div className="flex items-center space-x-6">
-                <NavLink href="#home">Home</NavLink>
                 <NavLink href="#about">About</NavLink>
+                <NavLink href="#skills">Skills</NavLink> {/* Added 'Skills' */}
                 <NavLink href="#education">Education</NavLink>
                 <NavLink href="#projects">Projects</NavLink>
                 <NavLink href="#blogs">Blogs</NavLink>
@@ -182,8 +182,9 @@ const Navbar = () => {
           className="md:hidden absolute top-16 inset-x-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800"
         >
           <div className="py-2">
-            <MobileNavLink href="#home">Home</MobileNavLink>
             <MobileNavLink href="#about">About</MobileNavLink>
+            <MobileNavLink href="#skills">Skills</MobileNavLink>{" "}
+            {/* Added 'Skills' */}
             <MobileNavLink href="#education">Education</MobileNavLink>
             <MobileNavLink href="#projects">Projects</MobileNavLink>
             <MobileNavLink href="#blogs">Blogs</MobileNavLink>
