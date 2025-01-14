@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Code, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import * as THREE from "three";
@@ -212,6 +212,16 @@ const Hero = () => {
             <Button variant="outline" size="lg" className="w-full sm:w-auto">
               <Linkedin className="mr-2 h-5 w-5" />
               LinkedIn
+            </Button>
+          </a>
+          <a
+            href="https://www.codechef.com/users/aditya1or0"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              <Code className="mr-2 h-5 w-5" />
+              Code Chef
             </Button>
           </a>
           <Link href="/#contact">
