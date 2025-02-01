@@ -2,6 +2,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata = {
+  icons: {
+    icon: "/logo.svg",
+  },
   title: "Aditya Sharma - Portfolio",
   description: "Full Stack Developer Portfolio",
 };
